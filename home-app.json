@@ -1,0 +1,48 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {      
+      "InstanceType": {
+        "Type": "String",
+        "Description": "Type of instance",
+        "Default": "t2.micro"
+      },
+
+      "AmiId": {
+        "Type": "String",
+        "Description": "ID of AMI",
+        "Default": "ami-82be18ed"
+      },
+
+      "SSHKey": {
+        "Type": "String",
+        "Description": "SSH key name",
+        "Default": "Home_EC2_Key"
+      },
+
+      "S3BucketName": {
+        "Type": "String",
+        "Default": "test-ec2-bucket"
+      }
+    },
+
+    "Resources": {
+
+      "VPC": {
+        "Type" : "AWS::CloudFormation::Stack",
+        "Properties" : {
+          "Tags" : [
+            {"Key":"StackType", "Value":"VPC"}
+          ],
+          "TemplateURL": {"Fn::Sub":"https://s3.amazonaws.com/${S3BucketName}/home-vpc.json"},
+          "TimeoutInMinutes" : "15"
+        }
+      },
+
+
+
+    },
+
+
+   
+    }         
+}
